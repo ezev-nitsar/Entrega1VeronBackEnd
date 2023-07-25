@@ -1,0 +1,18 @@
+{
+  "name": "entrega3backend",
+  "version": "1.0.0",
+  "description": "Entrega 3 del Curso de BackEnd - Express",
+  "main": "./src/app.js",
+  "type": "module",
+    "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js --ignore /src/data/*.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}
