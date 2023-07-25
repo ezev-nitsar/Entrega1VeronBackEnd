@@ -16,13 +16,19 @@ Se llama desde /api/cart
 router.get("/:cid", async (req, res) => {
     res.set('Content-Type', 'application/json');
     const carritos = await manejoCarrito.getCartById(req.params.cid);
-    res.send(carritos);
+    res.send(carritos)
 })
 
 //POST
 router.post("/", async (req, res) => {
     res.set('Content-Type', 'application/json');
     const result = await manejoCarrito.createCart();
+    const rta = JSON.parse(result);
+    if (rta.status === "ok") {
+        res.status(201);
+    } else {
+        res.status(500);
+    }
     res.send(result);
 });
 
@@ -33,16 +39,15 @@ router.post('/:cid/product/:pid', async (req, res) => {
     if (cartId && productId) {
         const productoExiste = await manejoProductos.getProductById(productId);
         if (productoExiste === false) {
+            res.status(404);
             res.send('{"status":"failed", "message":"Product not found"}');
         } else {
             const result = await manejoCarrito.addProduct(cartId, productId, 1);
             res.send(result);
         }
     } else {
+        res.status(401);
         res.send('{"status":"failed", "message":"Incomplete params"}');
     }
 });
-
-
-
 export default router;
