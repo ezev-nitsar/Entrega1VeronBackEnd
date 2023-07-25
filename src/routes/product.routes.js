@@ -50,9 +50,10 @@ router.post('/', async (req, res) => {
 });
 
 //PUT
-router.put('/', async (req, res) => {
+router.put('/:pid', async (req, res) => {
+    const productId = req.params.pid;
     res.set('Content-Type', 'application/json');
-    const actualizarProducto = JSON.parse(await manejoProductos.updateProduct(req.body.id, req.body));
+    const actualizarProducto = JSON.parse(await manejoProductos.updateProduct(parseInt(productId), req.body));
     if (actualizarProducto.status === "ok") {
         res.status(201);
         res.send(`{"status": "ok"}`);
@@ -63,9 +64,10 @@ router.put('/', async (req, res) => {
 });
 
 //DELETE
-router.delete('/', async (req, res) => {
+router.delete('/:pid', async (req, res) => {
+    const productId = req.params.pid;
     res.set('Content-Type', 'application/json');
-    const eliminarProducto = JSON.parse(await manejoProductos.deleteProduct(req.body.id));
+    const eliminarProducto = JSON.parse(await manejoProductos.deleteProduct(parseInt(productId)));
     if (eliminarProducto.status === "ok") {
         res.status(200);
         res.send(`{"status": "ok"}`);
