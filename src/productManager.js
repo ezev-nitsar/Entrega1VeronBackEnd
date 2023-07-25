@@ -66,14 +66,14 @@ export class ProductManager {
         await this.cargarProductos();
         //Verifico que todos los campos estén seteados y que price y stock sean numéricos
         if (!producto.title || !producto.description || !producto.price || isNaN(producto.price) || !producto.code || !producto.stock || isNaN(producto.stock)) {
-            return '{"status": "failed", "message": "Error al validar, verifica los campos por favor"}';
+            return '{"status": "failed", "message": "Validation error. Please review your inputs and try again"}';
         }
        if (producto.status != undefined) {
             status = producto.status;
         }
         //Valido que ya no exista un producto con el mismo código
      if (this.products.find(x => x.code === producto.code)) {
-            return '{"status": "failed", "message": "El código del producto enviado ya existe"}';
+            return '{"status": "failed", "message": "Product code already used"}';
         } else {
             // Todo OK, avanzo con la creación del objecto Product con los datos pasados por parámetros
             const title = producto.title;
@@ -116,7 +116,7 @@ export class ProductManager {
         await this.cargarProductos();
         const productoEncontrado = this.products.find(x => x.id === id);
         if (!productoEncontrado) {
-            return '{"status": "failed", "message": "El id enviado no existe"}';
+            return '{"status": "failed", "message": "Product does not exists"}';
         } else {
             //Inicialmente, seteo los valores originales del producto
             let title = productoEncontrado.title;
@@ -177,7 +177,7 @@ export class ProductManager {
         await this.cargarProductos();
         const productoEncontrado = this.products.find(x => x.id === id);
         if (!productoEncontrado) {
-            return '{"status": "failed", "message": "El id enviado no existe"}';
+            return '{"status": "failed", "message": "Product does not exists"}';
         } else {
             //Busco el producto y lo elimino
             const nuevosProductos = this.products.filter(x => x.id !== id);
